@@ -11,5 +11,9 @@ namespace _17._06._2022_FrontToBack.DAL
         }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<SliderContent> SliderContents { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+
     }
 }
