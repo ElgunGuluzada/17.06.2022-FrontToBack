@@ -25,6 +25,11 @@ namespace _17._06._2022_FrontToBack.Controllers
             homeVM.Products=_context.Products.Include(p=>p.Category).ToList();
             homeVM.About = _context.About.FirstOrDefault();
             homeVM.AboutContents = _context.AboutContent.ToList();
+            homeVM.Expert = _context.Expert.FirstOrDefault();
+            homeVM.ExpertsInfo = _context.ExpertsInfo.ToList();
+            homeVM.Blog = _context.Blog.FirstOrDefault();
+            homeVM.BlogsContent = _context.BlogsContent.ToList();
+            homeVM.Instagrams = _context.Instagram.ToList();
             return View(homeVM);
         }
         public IActionResult Detail(int? id,string name)

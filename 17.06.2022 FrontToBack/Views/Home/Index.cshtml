@@ -132,58 +132,26 @@
                 <div class="row py-5">
                     <div class="offset-lg-3 col-lg-6">
                         <div class="section-title">
-                            <h1>Flower Experts</h1>
-                            <p class="text-black-50">A perfect blend of creativity, energy, communication, happiness and
-                                love. Let us arrange
-                                a smile for you.</p>
+                            <h1>@Model.Expert.Title</h1>
+                            <p class="text-black-50">@Model.Expert.Desc</p>
                         </div>
                     </div>
                 </div>
                 <div class="row pb-5">
-                    <div class="col-md-6 col-lg-3">
+                   @foreach (var item in @Model.ExpertsInfo)
+                  {
+                       <div class="col-md-6 col-lg-3">
                         <div class="item text-center">
                             <div class="img">
-                                <img src="~/img/h3-team-img-1.png" class="img-fluid rounded-circle" alt="">
+                                <img src="~/img/@item.ImageUrl" class="img-fluid rounded-circle" alt="">
                             </div>
                             <div class="text mt-3">
-                                <h6>CRYSTAL BROOKS</h6>
-                                <p class="text-black-50">Florist</p>
+                                <h6>@item.Name</h6>
+                                <p class="text-black-50">@item.Position</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="item text-center">
-                            <div class="img">
-                                <img src="~/img/h3-team-img-2.png" class="img-fluid rounded-circle" alt="">
-                            </div>
-                            <div class="text mt-3">
-                                <h6>SHIRLEY HARRIS</h6>
-                                <p class="text-black-50">Manager</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="item text-center">
-                            <div class="img">
-                                <img src="~/img/h3-team-img-3.png" class="img-fluid rounded-circle" alt="">
-                            </div>
-                            <div class="text mt-3">
-                                <h6>BEVERLY CLARK</h6>
-                                <p class="text-black-50">Florist</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="item text-center">
-                            <div class="img">
-                                <img src="~/img/h3-team-img-4.png" class="img-fluid rounded-circle" alt="">
-                            </div>
-                            <div class="text mt-3">
-                                <h6>AMANDA WATKINS</h6>
-                                <p class="text-black-50">Florist</p>
-                            </div>
-                        </div>
-                    </div>
+                  }
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3"></div>
@@ -220,59 +188,29 @@
                 <div class="row py-5">
                     <div class="offset-lg-3 col-lg-6">
                         <div class="section-title">
-                            <h1>From our Blog</h1>
-                            <p class="text-black-50">A perfect blend of creativity, energy, communication, happiness and
-                                love. Let us arrange
-                                a smile for you.</p>
+                            <h1>@Model.Blog.Title</h1>
+                            <p class="text-black-50">@Model.Blog.Desc</p>
                         </div>
                     </div>
                 </div>
                 <div class="row pb-5">
-                    <div class="col-md-6 col-lg-4">
+                    @foreach (var item in @Model.BlogsContent)
+                   {
+                       <div class="col-md-6 col-lg-4">
                         <div class="item">
                             <div class="img position-relative">
-                                <img src="~/img/blog-feature-img-1.jpg" class="img-fluid" alt="">
+                                <img src="~/img/@item.ImageUrl" class="img-fluid" alt="">
                                 <div class="date rounded bg-light position-absolute py-1 px-2">
-                                    <span>29.12.2019</span>
+                                    <span>@item.Date</span>
                                 </div>
                             </div>
                             <div class="text mt-3 text-center px-5">
-                                <h5>Flower Power</h5>
-                                <p class="text-black-50">Class aptent taciti sociosqu ad litora torquent per conubia
-                                    nostra, per</p>
+                                <h5>@item.Title</h5>
+                                <p class="text-black-50">@item.Desc</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="item">
-                            <div class="img position-relative">
-                                <img src="~/img/blog-feature-img-3.jpg" class="img-fluid" alt="">
-                                <div class="date rounded bg-light position-absolute py-1 px-2">
-                                    <span>29.12.2019</span>
-                                </div>
-                            </div>
-                            <div class="text mt-3 text-center px-5">
-                                <h5>Local Florists</h5>
-                                <p class="text-black-50">Class aptent taciti sociosqu ad litora torquent per conubia
-                                    nostra, per</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="item">
-                            <div class="img position-relative">
-                                <img src="~/img/blog-feature-img-4.jpg" class="img-fluid" alt="">
-                                <div class="date rounded bg-light position-absolute py-1 px-2">
-                                    <span>29.12.2019</span>
-                                </div>
-                            </div>
-                            <div class="text mt-3 text-center px-5">
-                                <h5>Flower Beauty</h5>
-                                <p class="text-black-50">Class aptent taciti sociosqu ad litora torquent per conubia
-                                    nostra, per</p>
-                            </div>
-                        </div>
-                    </div>
+                   }
                 </div>
             </div>
         </section>
@@ -328,14 +266,10 @@
 
         <section id="instagram">
             <div class="owl-carousel instagram">
-                <div><img src="~/img/instagram1.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram2.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram3.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram4.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram5.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram6.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram7.jpg" class="img-fluid" alt=""></div>
-                <div><img src="~/img/instagram8.jpg" class="img-fluid" alt=""></div>
+                @foreach (var item in @Model.Instagrams)
+                {
+                <div><img src="~/img/@item.ImageUrl" class="img-fluid" alt=""></div>
+                }
             </div>
             <div class="hastag bg-light text-muted py-2 px-3">
                 #FIORELLO

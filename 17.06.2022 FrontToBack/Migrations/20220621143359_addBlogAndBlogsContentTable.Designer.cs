@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _17._06._2022_FrontToBack.DAL;
 
 namespace _17._06._2022_FrontToBack.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220621143359_addBlogAndBlogsContentTable")]
+    partial class addBlogAndBlogsContentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,21 +153,6 @@ namespace _17._06._2022_FrontToBack.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExpertsInfo");
-                });
-
-            modelBuilder.Entity("_17._06._2022_FrontToBack.Models.Instagram", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Instagram");
                 });
 
             modelBuilder.Entity("_17._06._2022_FrontToBack.Models.Product", b =>
