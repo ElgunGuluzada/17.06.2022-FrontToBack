@@ -23,6 +23,8 @@ namespace _17._06._2022_FrontToBack.Controllers
             homeVM.SliderContent = _context.SliderContents.FirstOrDefault();
             homeVM.Categories=_context.Categories.ToList();
             homeVM.Products=_context.Products.Include(p=>p.Category).ToList();
+            homeVM.About = _context.About.FirstOrDefault();
+            homeVM.AboutContents = _context.AboutContent.ToList();
             return View(homeVM);
         }
         public IActionResult Detail(int? id,string name)

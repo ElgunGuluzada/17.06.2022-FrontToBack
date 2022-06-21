@@ -9,5 +9,8 @@ namespace _17._06._2022_FrontToBack.ViewModels
         public SliderContent SliderContent { get; set; }
         public List<Category> Categories { get; set; }
         public List<Product> Products { get; set; }
+        public About About { get; set; }
+        public List<AboutContent> AboutContents { get; set; }
+
     }
 }
