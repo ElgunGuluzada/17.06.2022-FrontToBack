@@ -5,6 +5,7 @@ $(document).ready(function () {
     $(document).on('click', '#search', function () {
         $(this).next().toggle();
     })
+   
 
     $(document).on('click', '#mobile-navbar-close', function () {
         $(this).parent().removeClass("active");
@@ -24,6 +25,7 @@ $(document).ready(function () {
         }
         $(this).parent().next().slideToggle();
     })
+
 
     // SLIDER
 
@@ -64,6 +66,35 @@ $(document).ready(function () {
         {
             products.parent().fadeIn();
         }
+    })
+
+    //LoadMore 
+    let skip = 2;
+    let productCount = $('#productCount').val();
+    let row = $("#productList");
+    let row1 = $("#productList").children().last();
+
+    let lastData = $(".lastData");
+    let lastData1 = $(".lastData").html();
+
+    console.log(productCount)
+    
+    $(document).on('click', '#loadMore', function () {
+        let productList = $('#productList');
+        $.ajax({
+            url: "/product/loadMore?skip="+ skip,
+            method: "get",
+            success: function (res) {
+                productList.append(res);
+                skip += 2;
+                    //if (skip > row[0].children.length) {
+                    //    $("#loadMore").remove();
+                //}
+                if (skip >= productCount) {
+                        $("#loadMore").remove();
+                    }
+            }
+        })
     })
 
     // ACCORDION 
@@ -148,3 +179,11 @@ $(document).ready(function () {
         );
       });
 })
+
+
+
+
+//let row = document.getElementById("productList")
+//let lastData = document.getElementById("lastData");
+//let prodName = document.querySelector(".prodName")
+
