@@ -5,16 +5,28 @@ $(document).ready(function () {
     $(document).on('click', '#search', function () {
         $(this).next().toggle();
     })
-   
+
+     //search
+    $(document).on("keyup", '#input-search', function () {
+        let inputValue = $(this).val();
+        $("#searchList li").slice(1).remove();
+        $.ajax({
+            url: "/home/SearchProduct?search=" + inputValue,
+            method: "get",
+            success: function (res) {
+                $("#searchList").append(res);
+            }
+        });
+    }),
 
     $(document).on('click', '#mobile-navbar-close', function () {
         $(this).parent().removeClass("active");
 
-    })
+    }),
     $(document).on('click', '#mobile-navbar-show', function () {
         $('.mobile-navbar').addClass("active");
 
-    })
+    }),
 
     $(document).on('click', '.mobile-navbar ul li a', function () {
         if ($(this).children('i').hasClass('fa-caret-right')) {
@@ -24,12 +36,12 @@ $(document).ready(function () {
             $(this).children('i').removeClass('fa-sort-down').addClass('fa-caret-right')
         }
         $(this).parent().next().slideToggle();
-    })
+    }),
 
 
     // SLIDER
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $(".slider").owlCarousel(
             {
                 items: 1,
@@ -37,7 +49,7 @@ $(document).ready(function () {
                 autoplay: true
             }
         );
-      });
+    });
 
     // PRODUCT
 
@@ -77,8 +89,6 @@ $(document).ready(function () {
     let lastData = $(".lastData");
     let lastData1 = $(".lastData").html();
 
-    console.log(productCount)
-    
     $(document).on('click', '#loadMore', function () {
         let productList = $('#productList');
         $.ajax({

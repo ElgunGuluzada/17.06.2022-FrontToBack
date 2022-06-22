@@ -14,15 +14,15 @@ namespace _17._06._2022_FrontToBack.Controllers
 
         public HomeController(AppDbContext context)
         {
-           _context = context;
+            _context = context;
         }
         public IActionResult Index()
         {
             HomeVM homeVM = new HomeVM();
             homeVM.Sliders = _context.Sliders.ToList();
             homeVM.SliderContent = _context.SliderContents.FirstOrDefault();
-            homeVM.Categories=_context.Categories.ToList();
-            homeVM.Products=_context.Products.Include(p=>p.Category).ToList();
+            homeVM.Categories = _context.Categories.ToList();
+            homeVM.Products = _context.Products.Include(p => p.Category).ToList();
             homeVM.About = _context.About.FirstOrDefault();
             homeVM.AboutContents = _context.AboutContent.ToList();
             homeVM.Expert = _context.Expert.FirstOrDefault();
@@ -32,16 +32,30 @@ namespace _17._06._2022_FrontToBack.Controllers
             homeVM.Instagrams = _context.Instagram.ToList();
             return View(homeVM);
         }
-        public IActionResult Detail(int? id,string name)
+        public IActionResult Detail(int? id, string name)
         {
-            if(id== null)
+            if (id == null)
             {
                 return NotFound();
             }
-            Product dbProduct=_context.Products.FirstOrDefault(p=>p.Id==id);
-            if (dbProduct == null)  return NotFound();
-            
+            Product dbProduct = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (dbProduct == null) return NotFound();
+
             return View(dbProduct);
+        }
+
+        public IActionResult SearchProduct(string search)
+        {
+            List<Product> products = _context.Products
+                .Include(p => p.Category)
+                .OrderBy(p => p.Id)
+                .Where(p => p.Name.ToLower()
+                .Contains(search.ToLower())
+                ||p.ImageUrl.ToLower().Contains(search.ToLower()))
+                .Take(10)
+                .ToList();
+
+            return PartialView("_searchPartial", products);
         }
     }
 }
