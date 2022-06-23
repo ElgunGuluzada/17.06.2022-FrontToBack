@@ -19,8 +19,10 @@ namespace _17._06._2022_FrontToBack.DAL
         public DbSet<ExpertInfo> ExpertsInfo { get; set; }
         public DbSet<Blog> Blog { get; set; }
         public DbSet<BlogContent> BlogsContent { get; set; }
-
         public DbSet<Instagram> Instagram { get; set; }
+        public DbSet<Bio> Bios { get; set; }
+
+
 
     }
 }
