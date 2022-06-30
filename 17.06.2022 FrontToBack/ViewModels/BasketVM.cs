@@ -1,13 +1,13 @@
-﻿namespace _17._06._2022_FrontToBack.Models
+﻿namespace _17._06._2022_FrontToBack.ViewModels
 {
-    public class Product
+    public class BasketVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public double Price { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-        public int Count { get; set; }
+        public string Category { get; set; }
+        public int ProductCount { get; set; }
     }
 }

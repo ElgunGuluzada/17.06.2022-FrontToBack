@@ -22,7 +22,5 @@ namespace _17._06._2022_FrontToBack.DAL
         public DbSet<Instagram> Instagram { get; set; }
         public DbSet<Bio> Bios { get; set; }
 
-
-
     }
 }

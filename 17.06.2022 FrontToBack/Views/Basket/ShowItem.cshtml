@@ -1,0 +1,48 @@
+﻿@model List<BasketVM>
+@{
+    ViewData["Title"] = "ShowItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+
+<div class="container">
+    <div class ="row">
+        @if (Model.Count() > 0)
+        {
+                               <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                   <th scope="col">TotalPrice</th>
+                  <th scope="col">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                 @foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                      <th scope="row">@count</th>
+                      <td><img width="50" height="50" src="~/img/@item.ImageUrl" /></td>
+                      <td>@item.Name</td>
+                      <td>@item.Category</td>
+                      <td>@item.Price</td>
+                      <td>@(item.Price*item.ProductCount)</td>
+                      <td> <button style="border-radius: 50%; border: none; padding: 1px, 8px;"> <a>-</a> </button> @item.ProductCount <button style="border-radius: 50%; border: none; padding: 1px, 8px;">+</button></td>
+
+                   </tr>
+                }
+              </tbody>
+            </table>
+        }
+        else
+        {
+            <a asp-controller="home" asp-action="index"><h1 style="display:block;color:black">No Product <br />Return Home Page</h1></a>
+        }
+    </div>
+</div>
+

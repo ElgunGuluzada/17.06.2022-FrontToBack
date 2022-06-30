@@ -34,7 +34,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item shop-li">
-                                    <a class="nav-link" href="#">Shop</a>
+                                <a class="nav-link" asp-controller="product" asp-action="index" >Shop</a>
                                     <div class="container">
                                         <div class="row shop py-5">
                                             <div class="col-lg-3">
@@ -138,10 +138,10 @@
                                         
                                     </ul>
                                 </li>
-                                <li class="nav-item my-auto shop-cart">
-                                    <i class="fas fa-shopping-bag"></i>
-                                    <sup class="rounded-circle">0</sup>
-                                    <span>CART ($0)</span>
+                                 <li class="nav-item my-auto shop-cart">
+                                   <a asp-controller="basket" asp-action="showitem"> <i class="fas fa-shopping-bag"></i></a>
+                                    <sup class="rounded-circle">@ViewBag.BasketCount</sup>
+                                    <span>CART ($@ViewBag.TotalPrice)</span>
                                     <ul class="list-unstyled py-3">
                                         <li class="">No products in the cart.</li>
                                     </ul>
