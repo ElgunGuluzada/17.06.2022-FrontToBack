@@ -107,6 +107,15 @@ $(document).ready(function () {
         })
     })
 
+    //Basket 
+
+    //let basketBtn = $('.prvntDflt')
+    //$(document).on('click', basketBtn, function (ev) {
+    //    ev.preventDefault();
+    //})
+
+
+
     // ACCORDION 
 
     $(document).on('click', '.question', function()
