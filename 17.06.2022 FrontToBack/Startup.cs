@@ -52,6 +52,10 @@ namespace _17._06._2022_FrontToBack
 
             app.UseEndpoints(endpoints =>
             {
+            endpoints.MapControllerRoute(
+                     name: "areas",
+                     pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}"
+            );
                 endpoints.MapControllerRoute(
                    "default",
                    "{controller=home}/{action=Index}/{Id?}"
