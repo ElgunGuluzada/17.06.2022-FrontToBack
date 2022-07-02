@@ -1,0 +1,42 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
+}
+
+  <div class="card card-light">
+              <div class="card-header">
+                <h3 class="card-title">Create New Category</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form method="post">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Name"></label>
+                        <input asp-for="@Model.Name" class="form-control" placeholder="Name ...">
+                        <span  class="text-danger" asp-validation-for="Name"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- textarea -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Description"></label>
+                        <textarea asp-for="@Model.Description" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        <span  class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                    </div>
+                  </div>
+                 <button type="submit" class="btn btn-success">Submit</button> 
+                 <a asp-controller="category" asp-action="index" class="btn btn-danger">Cancel</a>
+                </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+<script src="~/admin/plugins/jquery/jquery.min.js"></script>
+

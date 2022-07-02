@@ -59,7 +59,6 @@ namespace _17._06._2022_FrontToBack.Controllers
                 existProduct.ProductCount++;
             }
 
-
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
 
             return RedirectToAction("index", "home");
@@ -104,7 +103,6 @@ namespace _17._06._2022_FrontToBack.Controllers
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
             return RedirectToAction("showitem", "basket");
         }
-
         public IActionResult plus(int? id)
         {
             List<BasketVM> products;
@@ -115,7 +113,6 @@ namespace _17._06._2022_FrontToBack.Controllers
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
             return RedirectToAction("showitem", "basket");
         }
-
         public IActionResult removeItem(int? id)
         {
             List<BasketVM> products;
