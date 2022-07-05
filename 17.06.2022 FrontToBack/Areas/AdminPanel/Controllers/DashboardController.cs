@@ -2,7 +2,7 @@
 
 namespace _17._06._2022_FrontToBack.Areas.adminPanel.Controllers
 {
-    [Area("AdminPanel")] 
+    [Area("adminpanel")] 
     public class DashboardController : Controller
     {
         public IActionResult Index()

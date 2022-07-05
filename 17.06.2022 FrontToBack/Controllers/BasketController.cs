@@ -25,6 +25,7 @@ namespace _17._06._2022_FrontToBack.Controllers
         {
             return View();
         }
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> AddItem(int? id)
         {
             if (id == null) return NotFound();
@@ -52,7 +53,6 @@ namespace _17._06._2022_FrontToBack.Controllers
                     Price = dbProduct.Price
                 };
                 products.Add(basketVM);
-
             }
             else
             {
@@ -60,8 +60,22 @@ namespace _17._06._2022_FrontToBack.Controllers
             }
 
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
+            double price=0;
+            double count=0;
 
-            return RedirectToAction("index", "home");
+            foreach(var product in products)
+            {
+                price += product.Price*product.ProductCount;
+                count += product.ProductCount;
+            }
+            var obj = new
+            {
+                Price = price,
+                Count=count,
+            };
+            return Ok(obj);
+
+            //return RedirectToAction("index", "home");
         }
 
         public IActionResult ShowItem()
@@ -101,7 +115,12 @@ namespace _17._06._2022_FrontToBack.Controllers
                 products.Remove(existProduct);
             }
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
-            return RedirectToAction("showitem", "basket");
+            var Obj = new
+            {
+                existProduct.ProductCount,
+            };
+            //return RedirectToAction("showitem", "basket");
+            return Ok(Obj);
         }
         public IActionResult plus(int? id)
         {

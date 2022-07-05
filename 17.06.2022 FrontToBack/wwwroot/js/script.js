@@ -6,7 +6,7 @@ $(document).ready(function () {
         $(this).next().toggle();
     })
 
-     //search
+    //search
     $(document).on("keyup", '#input-search', function () {
         let inputValue = $(this).val();
         $("#searchList li").slice(1).remove();
@@ -18,6 +18,19 @@ $(document).ready(function () {
             }
         });
     }),
+        // basket
+        $(document).on("click", ".minBtn", function () {
+            $.ajax({
+                url: "/basket/ShowItem",
+                method: "post",
+                success: function (res) {
+                    console.log(res)
+                    console.log("Okay")
+                    alert(res)
+                }
+            });
+        });
+  
 
     $(document).on('click', '#mobile-navbar-close', function () {
         $(this).parent().removeClass("active");
@@ -199,8 +212,25 @@ $(document).ready(function () {
       });
 })
 
-
-
+let addBtn = document.querySelectorAll(".addBtn")
+let totalCount = document.getElementById("totalCount")
+let totalPrice = document.getElementById("totalPrice")
+addBtn.forEach(add =>
+    add.addEventListener("click", function () {
+        let dataId = this.getAttribute("data-id")
+        console.log(dataId)
+        axios.post("/basket/AddItem?id="+dataId)
+            .then(function (response) {
+                // handle success
+                totalCount.innerHTML = response.data.count
+                totalPrice.innerHTML = ` $${response.data.price}`
+                //console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }))
 
 //let row = document.getElementById("productList")
 //let lastData = document.getElementById("lastData");
