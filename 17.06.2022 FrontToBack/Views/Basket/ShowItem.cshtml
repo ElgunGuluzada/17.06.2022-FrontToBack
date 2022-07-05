@@ -33,7 +33,7 @@
                       <td>@item.Price</td>
                       <td>@(item.Price*item.ProductCount)</td>
                       <td> <button style="border-radius: 50%; border: none; padding: 1px, 8px;"> <a class="minBtn" asp-controller="basket" asp-action="min" asp-route-id="@item.Id">-</a> </button> @item.ProductCount <button  style="border-radius: 50%; border: none; padding: 1px, 8px;"> <a class="plusBtn" asp-controller="basket" asp-action="plus" asp-route-id="@item.Id">+</a></button></td>
-                      <td><button style="border:none"><a style="color:red" class="prvntDflt" class="removeBtn" asp-controller="basket" asp-action="removeItem" asp-route-id="@item.Id" >X</a></button></td>
+                      <td><button style="border:none"><a style="color:red" class="removeBtn" asp-controller="basket" asp-action="removeItem" asp-route-id="@item.Id" >X</a></button></td>
                    </tr>
                 }
               </tbody>

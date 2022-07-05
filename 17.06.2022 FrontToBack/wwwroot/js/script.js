@@ -19,18 +19,6 @@ $(document).ready(function () {
         });
     }),
         // basket
-        $(document).on("click", ".minBtn", function () {
-            $.ajax({
-                url: "/basket/ShowItem",
-                method: "post",
-                success: function (res) {
-                    console.log(res)
-                    console.log("Okay")
-                    alert(res)
-                }
-            });
-        });
-  
 
     $(document).on('click', '#mobile-navbar-close', function () {
         $(this).parent().removeClass("active");
@@ -230,7 +218,8 @@ addBtn.forEach(add =>
                 // handle error
                 console.log(error);
             })
-    }))
+    })
+)
 
 //let row = document.getElementById("productList")
 //let lastData = document.getElementById("lastData");

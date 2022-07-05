@@ -1,0 +1,95 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
+}
+
+  <div class="card card-light">
+              <div class="card-header">
+                <h3 class="card-title">Create New Category</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Name"></label>
+                        <input asp-for="@Model.Name" class="form-control" placeholder="Name ...">
+                        <span  class="text-danger" asp-validation-for="Name"></span>
+                      </div>
+                    </div>
+                  </div>
+                 
+                   <div class="row">
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Price"></label>
+                        <input asp-for="@Model.Price" class="form-control" placeholder="Price ...">
+                        <span  class="text-danger" asp-validation-for="Price"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                   <div class="row">
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Count"></label>
+                        <input min="0" max="99"  asp-for="@Model.Count" class="form-control" placeholder="Count ...">
+                        <span  class="text-danger" asp-validation-for="Count"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                   <div class="row">
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label asp-for="@Model.Photo"></label><br />
+                        <input  asp-for="@Model.Photo">
+                        <span  class="text-danger" asp-validation-for="Photo"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                   <div class="row">
+                    <div class="col-sm-2">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label asp-for="Category">Custom Select</label>
+                        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="custom-select"></select>
+                      </div>
+                    </div>
+                   </div>
+                      <a target="_blank" asp-controller="category" asp-action="create" class="btn btn-primary">Create New Category</a> <br /><br />
+                 <button type="submit" class="btn btn-success">Submit</button> 
+                 <a asp-controller="category" asp-action="index" class="btn btn-danger">Cancel</a>
+                </form>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+<script src="~/admin/plugins/jquery/jquery.min.js"></script>
+
+@section Scripts{
+<script src="~/admin/dist/js/main.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<!-- Jquery Validation cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- Asp Jquery Validation cdn-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+ <script>
+ ClassicEditor
+       .create( document.querySelector( '#Description' ) )
+       .then( editor => {
+       console.log( editor );
+       } )
+      .catch( error => {
+       console.error( error );
+       } );
+ </script>
+}
+

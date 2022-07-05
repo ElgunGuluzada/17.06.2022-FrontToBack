@@ -115,22 +115,28 @@ namespace _17._06._2022_FrontToBack.Controllers
                 products.Remove(existProduct);
             }
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
-            var Obj = new
-            {
-                existProduct.ProductCount,
-            };
-            //return RedirectToAction("showitem", "basket");
-            return Ok(Obj);
+           
+            return RedirectToAction("showitem", "basket");
         }
         public IActionResult plus(int? id)
         {
+            Product product = _context.Products.FirstOrDefault(p => p.Id == id);
             List<BasketVM> products;
             string basket = Request.Cookies["basket"];
             products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
             BasketVM existProduct = products.Find(p => p.Id == id);
-            existProduct.ProductCount++;
+            if (product.Count <= existProduct.ProductCount)
+            {
+                //ViewBag.Name(product.Count);
+                return Ok($"Bazada cemisi {product.Count} mehsul var");
+            }
+            else
+            {
+                existProduct.ProductCount++;
+            }
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
-            return RedirectToAction("showitem", "basket");
+            //return RedirectToAction("showitem", "basket");
+            return RedirectToAction("showItem","basket");
         }
         public IActionResult removeItem(int? id)
         {
