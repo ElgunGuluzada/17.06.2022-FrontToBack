@@ -64,6 +64,7 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
                 Price = product.Price,
                 Name = product.Name,
                 CategoryId = product.CategoryId,
+                Count=product.Count,
                 ImageUrl = product.Photo.SaveImage(_env, "img")
             };
             await _context.Products.AddAsync(newProduct);
@@ -106,10 +107,10 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
             {
                 return View();
             }
-
+            string imgUrl = "";
             if (product.Photo == null)
             {
-                dbProduct.ImageUrl = dbProduct.ImageUrl;
+                 imgUrl= dbProduct.ImageUrl;
             }
             else
             {
@@ -124,21 +125,23 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
                     ModelState.AddModelError("Photo", "Size is higher max 1mb");
                     return View();
                 }
-                dbProduct.ImageUrl = product.Photo.SaveImage(_env, "img");
+                 imgUrl = product.Photo.SaveImage(_env, "img");
 
             }
-            string img = dbProduct.ImageUrl;
+            string oldImg= dbProduct.ImageUrl;
+            string path = Path.Combine(_env.WebRootPath, "img", oldImg);
+            _17._06._2022_FrontToBack.Helpers.Helper.DeleteImage(path);
+
             Product newProduct = new Product
             {
                 Price = product.Price,
                 Name = product.Name,
                 CategoryId = product.CategoryId,
                 Count=product.Count,
-                ImageUrl=dbProduct.ImageUrl,
+                ImageUrl=imgUrl,
             };
 
-            string path = Path.Combine(_env.WebRootPath, "img", img);
-            _17._06._2022_FrontToBack.Helpers.Helper.DeleteImage(path);
+           
             //string UploadPath = ConfigurationManager.AppSettings["ProductImagePath"].ToString();
             //ViewBag.Path = UploadPath;
 
