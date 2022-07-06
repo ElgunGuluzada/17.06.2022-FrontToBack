@@ -9,7 +9,6 @@ $(function () {
 
 let catName = document.getElementById("categoryName")
 let catDesc = document.getElementById("categoryDesc")
-console.log(catName.value)
 catName.onkeyup = function () {
   if (catName.value.length >= 3) {
     catDesc.removeAttribute("disabled")
@@ -18,3 +17,4 @@ catName.onkeyup = function () {
     catDesc.setAttribute("disabled", true)
   }
 }
+

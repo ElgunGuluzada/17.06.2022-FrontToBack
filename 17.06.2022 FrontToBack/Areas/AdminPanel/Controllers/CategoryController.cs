@@ -87,7 +87,7 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
                 return View();
             }
 
-            Category dbCategoryName = _context.Categories.FirstOrDefault(c => c.Name.ToLower() == category.Name.ToLower());
+            Category dbCategoryName = _context.Categories.FirstOrDefault(c => c.Name.ToLower().Trim() == category.Name.ToLower().Trim());
 
             if (dbCategoryName != null)
             {

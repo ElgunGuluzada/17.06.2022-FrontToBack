@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace FrontToBack.Areas.AdminPanel.Controllers
 {
@@ -28,17 +29,6 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
         {
             return View(_context.Products.Include(p => p.Category).ToList());
         }
-
-        public async Task<IActionResult> Detail(int? id)
-        {
-            if (id == null) return NotFound();
-            Product dbProduct = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
-            if (dbProduct == null) return NotFound();
-
-            return View(dbProduct);
-
-        }
-
 
         public IActionResult Create()
         {
@@ -69,8 +59,6 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
                 return View();
             }
 
-
-
             Product newProduct = new Product
             {
                 Price = product.Price,
@@ -82,6 +70,83 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
             _context.SaveChanges();
 
 
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null) return NotFound();
+            Product dbProduct = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            if (dbProduct == null) return NotFound();
+
+            return View(dbProduct);
+        }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name"); ;
+            if (id == null) return NotFound();
+            Product dbProduct = await _context.Products.FindAsync(id);
+            if (dbProduct == null) return NotFound();
+
+            return View(dbProduct);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(Product product)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
+            Product dbProduct = await _context.Products.FindAsync(product.Id);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            if (dbProduct == null)
+            {
+                return View();
+            }
+
+            if (product.Photo == null)
+            {
+                dbProduct.ImageUrl = dbProduct.ImageUrl;
+            }
+            else
+            {
+                if (!product.Photo.IsImage())
+                {
+                    ModelState.AddModelError("Photo", "Only Image Files");
+                    return View();
+                }
+
+                if (product.Photo.ValidSize(1000))
+                {
+                    ModelState.AddModelError("Photo", "Size is higher max 1mb");
+                    return View();
+                }
+                dbProduct.ImageUrl = product.Photo.SaveImage(_env, "img");
+
+            }
+            string img = dbProduct.ImageUrl;
+            Product newProduct = new Product
+            {
+                Price = product.Price,
+                Name = product.Name,
+                CategoryId = product.CategoryId,
+                Count=product.Count,
+                ImageUrl=dbProduct.ImageUrl,
+            };
+
+            string path = Path.Combine(_env.WebRootPath, "img", img);
+            _17._06._2022_FrontToBack.Helpers.Helper.DeleteImage(path);
+            //string UploadPath = ConfigurationManager.AppSettings["ProductImagePath"].ToString();
+            //ViewBag.Path = UploadPath;
+
+            _context.Products.Remove(dbProduct);
+            await _context.Products.AddAsync(newProduct);
+            await _context.SaveChangesAsync();
+
+            //return Ok(UploadPath);
             return RedirectToAction("Index");
         }
 
@@ -101,7 +166,6 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
-
         }
     }
 }
