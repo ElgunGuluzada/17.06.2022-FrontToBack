@@ -144,7 +144,7 @@ namespace FrontToBack.Areas.AdminPanel.Controllers
            
             //string UploadPath = ConfigurationManager.AppSettings["ProductImagePath"].ToString();
             //ViewBag.Path = UploadPath;
-
+            
             _context.Products.Remove(dbProduct);
             await _context.Products.AddAsync(newProduct);
             await _context.SaveChangesAsync();

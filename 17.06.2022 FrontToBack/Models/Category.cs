@@ -12,7 +12,5 @@ namespace _17._06._2022_FrontToBack.Models
         [Required(ErrorMessage ="Don't be Empty"), MaxLength(150)]
         public string Description { get; set; }
         public List<Product>  Products{ get; set; }
-        [NotMapped]
-        public bool isDeleted { get; set; }
     }
 }

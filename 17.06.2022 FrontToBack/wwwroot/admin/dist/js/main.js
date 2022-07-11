@@ -14,7 +14,6 @@ catName.onkeyup = function () {
     catDesc.removeAttribute("disabled")
   }
   else {
-    catDesc.setAttribute("disabled", true)
+    catDesc.setAttribute("disabled")
   }
 }
-

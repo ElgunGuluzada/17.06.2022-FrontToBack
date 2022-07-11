@@ -1,0 +1,157 @@
+﻿@model RegisterVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registration Page</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="~/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="~/admin/index2.html"><b>Register</b></a>
+  </div>
+
+  <div class="card">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">Register a new membership</p>
+
+      <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="input-group mb-3">
+          <input asp-for="Fullname" class="form-control" placeholder="Fullname">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Fullname"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Username" class="form-control" placeholder="Username">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Username"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Email" class="form-control" placeholder="Email">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Email"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Password" class="form-control" placeholder="Password">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Password"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="RepeatPassword" class="form-control" placeholder="Retype password">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="RepeatPassword"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+             <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+               I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-primary">
+          <i class="fab fa-facebook mr-2"></i>
+          Sign up using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-danger">
+          <i class="fab fa-google-plus mr-2"></i>
+          Sign up using Google+
+        </a>
+      </div>
+      <a asp-controller="account" asp-action="login" class="text-center">I already have a membership</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+<!-- jQuery -->
+<script src="~/admin/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/admin/dist/js/adminlte.min.js"></script>
+<script src="~/admin/dist/js/countdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+<script>
+let eye = document.querySelectorAll(".fa-lock")
+        eye.forEach(e =>{
+             e.onmouseover=function(){
+                 this.classList.remove("fa-lock")
+                 this.classList.add("fa-unlock")
+            e.parentElement.parentElement.previousElementSibling.previousElementSibling.type="text"
+            };
+
+            e.onmouseleave=function(){
+                 this.classList.add("fa-lock")
+                 this.classList.remove("fa-unlock")
+                       e.parentElement.parentElement.previousElementSibling.previousElementSibling.type="password"
+            }
+          }
+        )
+
+        $('#deadline').countdown('2022/8/12', function (event) {
+
+    // $('#days').html(event.strftime(''
+    //     + `<div>${66}</div>`
+    // ));
+    $('#hours').html(event.strftime(''
+        + `<div>%H</div>`
+    ));
+    $('#minutes').html(event.strftime(''
+        + `<div>%M</div>`
+    ));
+    $('#sec').html(event.strftime(''
+        + `<div>%S</div>`
+    ));
+});
+</script>
+</body>
+</html>
