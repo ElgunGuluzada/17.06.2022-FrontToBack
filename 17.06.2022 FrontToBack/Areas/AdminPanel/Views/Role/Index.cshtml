@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityRole>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
+    int no = 0;
+}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>DataTables</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">DataTables</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">DataTable with default features</h3>
+                </div>
+                 <div>
+                   <a asp-controller="role" asp-action="create" class="btn btn-primary ml-4">Create Role</a>
+               </div> 
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Setting</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      @foreach (var item in Model)
+                      {
+                              no++;
+                               <tr>
+                              <td>@no</td>
+                              <td>@item.Name</td>
+                            
+                              <td>
+                                  <a class="btn btn-secondary" asp-action="update" asp-route-id="@item.Id"> <box-icon name='edit-alt'></box-icon></a>
+                                   <a class="btn btn-primary" asp-action="detail" asp-route-id="@item.Id"> <box-icon name='message-rounded-edit'></box-icon></a>
+                                    <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id"><box-icon name='message-alt-x'></box-icon></a>
+                              </td>
+                        </tr>
+                      }
+                  </tbody>
+                 @* <tfoot>
+                  <tr>
+                   <th>No</th>
+                    <th>Name</th>
+                    <th>Desc</th>
+                    <th>Setting</th>
+                  </tr>
+                  </tfoot>*@
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    <!-- DataTables  & Plugins -->
+<script src="~/admin/plugins/jquery/jquery.min.js"></script>
+<script src="~/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/admin/plugins/jszip/jszip.min.js"></script>
+<script src="~/admin/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/admin/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+
+  <script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>

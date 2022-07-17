@@ -10,5 +10,10 @@
                 System.IO.File.Delete(path);
             }
         }
+
+        public enum UserRoles
+        {
+            Member
+        }
     }
 }

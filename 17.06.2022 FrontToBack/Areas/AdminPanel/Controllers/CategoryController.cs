@@ -1,5 +1,6 @@
 ﻿using _17._06._2022_FrontToBack.DAL;
 using _17._06._2022_FrontToBack.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
 {
     [Area("adminpanel")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,7 +23,7 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
             List<Category> categories = _context.Categories.ToList();
             return View(categories);
         }
-
+        
         public IActionResult Create()
         {
             return View();
@@ -53,7 +55,7 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null) return NotFound();

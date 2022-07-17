@@ -10,10 +10,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FrontToBack.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
+    [Authorize(Roles = "Admin , SuperAdmin")]
     public class ProductController : Controller
     {
         private readonly AppDbContext _context;

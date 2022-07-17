@@ -1,0 +1,107 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
+}
+<section class="content-header">
+
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="input-group mb-3">
+          <input asp-for="Fullname" class="form-control" placeholder="Fullname">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Fullname"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Username" class="form-control" placeholder="Username">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Username"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Email" class="form-control" placeholder="Email">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Email"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="Password" class="form-control" placeholder="Password">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="Password"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input asp-for="RepeatPassword" class="form-control" placeholder="Retype password">
+          <span style="position: absolute; top:35px" class="text-danger" asp-validation-for="RepeatPassword"></span>
+          <div class="input-group-append">
+            <div class="input-group-text">
+             <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+               I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button asp-action="index" class="btn btn-default btn-block">Cansel</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+       </div>
+      </div>
+     </div>
+    </section>
+
+    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/admin/dist/js/adminlte.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    <script>
+    let eye = document.querySelectorAll(".fa-lock")
+        eye.forEach(e =>{
+             e.onmouseover=function(){
+                 this.classList.remove("fa-lock")
+                 this.classList.add("fa-unlock")
+            e.parentElement.parentElement.previousElementSibling.previousElementSibling.type="text"
+            };
+
+            e.onmouseleave=function(){
+                 this.classList.add("fa-lock")
+                 this.classList.remove("fa-unlock")
+                       e.parentElement.parentElement.previousElementSibling.previousElementSibling.type="password"
+            }
+          }
+        )
+    </script>

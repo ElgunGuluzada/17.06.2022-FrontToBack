@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
+}
+<section class="content-header">
+
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-3">
+           <form method="post" >
+              <div class="form-group">
+                 <label class="col-form-label" for="inputSuccess"><i class=""></i> Create Role</label>
+                   <input name="role" type="text" class="form-control " id="inputSuccess" placeholder="Enter ...">
+               </div>
+               <button type="submit" class="btn btn-success">Create Role</button>
+               <button asp-action="index" class="btn btn-primary">Go Back</button>
+            </form>
+           </div>
+          </div>
+         </div>
+ </section>
+@*
+                      <div class="form-group">
+                           <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
+                              success</label>
+                          <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
+                             </div>*@
+
+<script src="~/admin/plugins/jquery/jquery.min.js"></script>

@@ -61,6 +61,10 @@
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
+          @if (ViewBag.Role=="Ban")
+          {
+              <span><b class="text-danger ml-3"> @TempData["Banned"] </b> </span>
+          }
           @if (ViewBag.Email==false)
          {
              <span style="position: absolute; z-index:1000;width: 400px; top: 40px;left: 50px">
@@ -76,7 +80,6 @@
                         }
                         else if (ViewBag.Failed == 0)
                         {
-                        <b class="text-danger ml-3">Your Profile Blocked for 1 min!</b>
                         <span style="position: absolute; z-index:1000;width: 400px; bottom: 205px;left: 50px" id="errMsg">
                             @TempData["Error"]
                          </span>  

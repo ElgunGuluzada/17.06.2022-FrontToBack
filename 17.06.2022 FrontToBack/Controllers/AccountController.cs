@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
+using static _17._06._2022_FrontToBack.Helpers.Helper;
 
 namespace _17._06._2022_FrontToBack.Controllers
 {
@@ -42,7 +43,7 @@ namespace _17._06._2022_FrontToBack.Controllers
         {
             if (!ModelState.IsValid) return View();
             DateTime now = DateTime.Now;
-            DateTime confirm = now.AddMinutes(5);
+            DateTime confirm = now.AddMinutes(1);
             AppUser user = new AppUser
             {
                 Fullname = registerVM.Fullname,
@@ -62,7 +63,7 @@ namespace _17._06._2022_FrontToBack.Controllers
                 return View(registerVM);
             }
 
-
+            await _userManager.AddToRoleAsync(user, UserRoles.Member.ToString());
             return RedirectToAction("login","account");
 
         }
@@ -73,7 +74,7 @@ namespace _17._06._2022_FrontToBack.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginVM login)
+        public async Task<IActionResult> Login(LoginVM login,string ReturnUrl)
         {
             if (!ModelState.IsValid) return View();
 
@@ -83,23 +84,44 @@ namespace _17._06._2022_FrontToBack.Controllers
                 ModelState.AddModelError("", "email or  password is invalid!");
                 return View(login);
             }
+            var roles = await _userManager.GetRolesAsync(appUser);
+            //var AppUserRole = await _userManager.GetRolesAsync(appUser);
             SignInResult result = await _signInManager.PasswordSignInAsync(appUser, login.Password, true, true);
 
             TimeSpan time = appUser.ConfirmMailTime.ToUniversalTime() - DateTime.Now.ToUniversalTime();
             var time2 = TimeSpan.FromMinutes(time.TotalMinutes);
             int m = time2.Minutes;
             var s = time2.Seconds;
-            if (s <= 0 && appUser.EmailConfirmed == false)
+            foreach (var item in roles)
             {
-                await _signInManager.SignOutAsync();
-                await _userManager.DeleteAsync(appUser);
-                ModelState.AddModelError("","Email Reset! You can use this email again!");
-                return View(login);
-            }
-            else if (appUser.EmailConfirmed==true&&result.Succeeded)
-            {
-                await _signInManager.SignInAsync(appUser, true);
-                return RedirectToAction("Index", "home");
+                if (result.Succeeded)
+                {
+                    ViewBag.Role = item;
+                    if (s <= 0 && appUser.EmailConfirmed == false)
+                    {
+                        await _signInManager.SignOutAsync();
+                        await _userManager.DeleteAsync(appUser);
+                        ModelState.AddModelError("", "Email Reset! You can use this email again!");
+                        return View(login);
+                    }
+                    else if (item == "Ban")
+                    {
+                        await _signInManager.SignOutAsync();
+
+                        TempData["Banned"] = "Hesabiniz banlanmisdir";
+                        return View(login);
+                    }
+                    else if (appUser.EmailConfirmed == true && item == "Member")
+                    {
+                        return RedirectToAction("Index", "home");
+                    }
+                    else if (item.ToLower().Contains("admin"))
+                    {
+                        await _signInManager.SignInAsync(appUser, true);
+                        ViewBag.AdminUser = appUser.Fullname;
+                        return RedirectToAction("index", "dashboard", new { area = "AdminPanel" });
+                    }
+                }
             }
             ViewBag.Failed = appUser.AccessFailedCount;
             ViewBag.Success=result.Succeeded;
@@ -127,6 +149,12 @@ namespace _17._06._2022_FrontToBack.Controllers
                 ModelState.AddModelError("", "email or  password is invalid!");
                 return View(login);
             }
+
+            if (ReturnUrl != null)
+            {
+                return Redirect(ReturnUrl);
+            }
+
             return View();
         }
 
@@ -137,6 +165,16 @@ namespace _17._06._2022_FrontToBack.Controllers
             //await _userManager.DeleteAsync(curUser);
             return RedirectToAction("index", "home");
 
+        }
+        public async Task CreateRole()
+        {
+            foreach (var item in Enum.GetValues(typeof(UserRoles)))
+            {
+                if (!await _rolemanager.RoleExistsAsync(item.ToString()))
+                {
+                    await _rolemanager.CreateAsync(new IdentityRole { Name = item.ToString() });
+                }
+            }
         }
     }
 }
