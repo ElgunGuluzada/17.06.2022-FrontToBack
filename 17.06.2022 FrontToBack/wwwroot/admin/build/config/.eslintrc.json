@@ -6,7 +6,7 @@
   "parserOptions": {
     "sourceType": "script"
   },
-  "extends": "../../.eslintrc.json",
+  "extends": "~/admin/.eslintrc.json",
   "rules": {
     "no-console": "off",
     "strict": "error",

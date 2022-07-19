@@ -23,24 +23,28 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
             _rolemanager = rolemanager;
             _signInManager = signInManager;
         }
-        public async Task<IActionResult> Index(string Id)
+        public async Task<IActionResult> Index()
         {
             var users = _userManager.Users.ToList();
-            //var user = _userManager.Users.FirstOrDefault(u=> u.Id == Id); 
-            //var userRoles = await _userManager.GetRolesAsync(user);
+            UserVM userVM = new UserVM();
+            foreach (var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                //var roles = _rolemanager.Roles.ToList();
 
-            //UserVM userVM = new UserVM()
-            //{
-            //    Users = users,
-            //    userRoles = userRoles,
-            //};
-            //return View(userVM);
-            return View(users);
+                userVM.Users = users;
+                userVM.userRoles = userRoles;
+                //userVM.Roles = roles;
+                userVM.UserId = user.Id;
+            }
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+          
+            return View(userVM);
         }
 
         public async Task<IActionResult> Update(string id)
         {
-            AppUser user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             var userRoles = await _userManager.GetRolesAsync(user);
             var roles = _rolemanager.Roles.ToList();
             RoleVM rolevm = new RoleVM
@@ -104,6 +108,22 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
 
             await _userManager.AddToRoleAsync(user, UserRoles.Member.ToString());
             return RedirectToAction("index","user");
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null) return NotFound();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
+            if (user.EmailConfirmed==false)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+            else
+            {
+                return Content("Silmek Olmaz");
+            }
+            return RedirectToAction("index");
         }
     }
 }

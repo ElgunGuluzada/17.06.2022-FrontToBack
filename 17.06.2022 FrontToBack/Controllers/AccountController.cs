@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 using static _17._06._2022_FrontToBack.Helpers.Helper;
+using _17._06._2022_FrontToBack.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace _17._06._2022_FrontToBack.Controllers
 {
@@ -15,12 +17,14 @@ namespace _17._06._2022_FrontToBack.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _rolemanager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IConfiguration _config;
 
-        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> rolemanager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> rolemanager, SignInManager<AppUser> signInManager, IConfiguration config)
         {
             _userManager = userManager;
             _rolemanager = rolemanager;
             _signInManager = signInManager;
+            _config = config;
         }
 
         public IActionResult Index()    
@@ -64,8 +68,23 @@ namespace _17._06._2022_FrontToBack.Controllers
             }
 
             await _userManager.AddToRoleAsync(user, UserRoles.Member.ToString());
-            return RedirectToAction("login","account");
 
+
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string confirmation = Url.Action("ConfirmEmail","Account",new
+            {
+                token,
+                Email = registerVM.Email
+            },Request.Scheme);
+
+            Helper helper = new Helper(_config.GetSection("ConfirmationParameter:Email").Value,_config.GetSection("ConfirmationParameter:Password").Value);
+            var emailResult =  helper.SendEmail(registerVM.Email, confirmation);
+            if (!emailResult)
+            {
+                return View(registerVM);
+            }
+
+            return RedirectToAction("login","account");
         }
 
         public IActionResult Login()
@@ -118,7 +137,6 @@ namespace _17._06._2022_FrontToBack.Controllers
                     else if (item.ToLower().Contains("admin"))
                     {
                         await _signInManager.SignInAsync(appUser, true);
-                        ViewBag.AdminUser = appUser.Fullname;
                         return RedirectToAction("index", "dashboard", new { area = "AdminPanel" });
                     }
                 }
@@ -175,6 +193,14 @@ namespace _17._06._2022_FrontToBack.Controllers
                     await _rolemanager.CreateAsync(new IdentityRole { Name = item.ToString() });
                 }
             }
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string token,string email)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(email);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            return View(result.Succeeded? "ConfirmEmail": "Error");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,5 +22,7 @@ namespace _17._06._2022_FrontToBack.Models
 
         [Required(ErrorMessage = "Please, Write Product Count")]
         public int Count { get; set; }
+
+        public List<SalesProduct> SalesProducts { get; set; }
     }
 }

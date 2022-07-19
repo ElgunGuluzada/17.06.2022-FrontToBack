@@ -3,9 +3,9 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("../markdown/markdown"), require("../../addon/mode/overlay"));
+    mod(require("~/admin/lib/codemirror"), require("../markdown/markdown"), require("~/admin/addon/mode/overlay"));
   else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "../markdown/markdown", "../../addon/mode/overlay"], mod);
+    define(["~/admin/lib/codemirror", "../markdown/markdown", "~/admin/addon/mode/overlay"], mod);
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {

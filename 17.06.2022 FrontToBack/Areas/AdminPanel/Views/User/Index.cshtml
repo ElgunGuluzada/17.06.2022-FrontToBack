@@ -1,4 +1,5 @@
-﻿@model List<AppUser>
+﻿@*@model List<AppUser>*@
+ @model UserVM
 
 @{
     ViewData["Title"] = "Index";
@@ -42,22 +43,26 @@
                     <th>No</th>
                     <th>UserName</th>
                     <th>FullName</th>
-                    @*<th>Role</th>*@
+                    <th>Role</th>
                     <th>Setting</th>
                   </tr>
                   </thead>
                   <tbody>
-                      @foreach (var item in Model)
+
+                      @foreach (var item in Model.Users)
                       {
                               no++;
                                <tr>
                               <td>@no</td>
                               <td>@item.UserName</td>
                               <td>@item.Fullname</td>
-                              @*<td>@foreach (var role in Model)
+                              <td>
+                                  @foreach (var userRole in Model.userRoles)
                                   {
-                                      @role
-                                  }</td>*@
+                                    <span>@userRole</span>                                        
+                                    @*<input value="@userRole.ToString()" class="form-check-input" type="checkbox" @(Model.userRoles.Contains(userRole.ToString())? "checked=&quot;checked&quot;":" ") /> @userRole <br />*@
+                                  }
+                              </td>
                               <td>
                                   <a class="btn btn-secondary" asp-action="update" asp-route-id="@item.Id"> <box-icon name='edit-alt'></box-icon></a>
                                    <a class="btn btn-primary" asp-action="detail" asp-route-id="@item.Id"> <box-icon name='message-rounded-edit'></box-icon></a>

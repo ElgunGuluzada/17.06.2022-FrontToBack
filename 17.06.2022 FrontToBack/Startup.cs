@@ -42,9 +42,10 @@ namespace _17._06._2022_FrontToBack
                 opt.Password.RequireUppercase = true;
                 opt.Password.RequireDigit = true;
 
+                opt.SignIn.RequireConfirmedEmail=true;
                 opt.User.RequireUniqueEmail = true;
                 opt.Lockout.MaxFailedAccessAttempts = 3;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
                 opt.Lockout.AllowedForNewUsers = true;
 
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();

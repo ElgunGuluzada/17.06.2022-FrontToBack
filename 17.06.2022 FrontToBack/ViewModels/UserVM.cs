@@ -8,5 +8,8 @@ namespace _17._06._2022_FrontToBack.ViewModels
     {
         public List<AppUser> Users { get; set; }
         public IList<string> userRoles { get; set; }
+        public string UserId { get; set; }
+        //public List<IdentityRole> Roles { get; set; }
+
     }
 }

@@ -21,7 +21,6 @@ namespace _17._06._2022_FrontToBack.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            
             if (User!=null)
             {
                     if (User.Identity.IsAuthenticated)
@@ -34,6 +33,7 @@ namespace _17._06._2022_FrontToBack.ViewComponents
             {
                 return View();
             }
+
             ViewBag.BasketCount = 0;
             ViewBag.TotalPrice = 0;
             double totalPrice = 0;

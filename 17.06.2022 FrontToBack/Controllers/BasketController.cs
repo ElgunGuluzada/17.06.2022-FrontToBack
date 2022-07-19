@@ -9,16 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace _17._06._2022_FrontToBack.Controllers
 {
     public class BasketController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public BasketController(AppDbContext context)
+       public BasketController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -128,7 +131,7 @@ namespace _17._06._2022_FrontToBack.Controllers
             if (product.Count <= existProduct.ProductCount)
             {
                 //ViewBag.Name(product.Count);
-                return Ok($"Bazada cemisi {product.Count} mehsul var");
+                TempData["failCount"] = $"{product.Name}-dan bazada cemisi {product.Count} eded var";
             }
             else
             {
@@ -148,6 +151,54 @@ namespace _17._06._2022_FrontToBack.Controllers
             products.Remove(existProduct);
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products), new CookieOptions { MaxAge = TimeSpan.FromDays(5) });
             return RedirectToAction("showitem", "basket");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Sale()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                Sale sale = new Sale();
+                sale.SaleDate = DateTime.Now;
+                sale.AppUserId = user.Id;
+
+                List<BasketVM> basketProducts = JsonConvert.DeserializeObject<List<BasketVM>>(Request.Cookies["basket"]);
+                List<SalesProduct> salesProducts = new List<SalesProduct>();
+                double total = 0;
+                foreach (var basketProduct in basketProducts)
+                {
+                    Product dbProduct = await _context.Products.FindAsync(basketProduct.Id);
+                    if (basketProduct.ProductCount > dbProduct.Count)
+                    {
+                        TempData["fail"] = "Satış uğursuzdur..";
+                        return RedirectToAction("ShowItem");
+                    }
+
+                    SalesProduct salesProduct = new SalesProduct();
+                    salesProduct.ProductId = dbProduct.Id;
+                    salesProduct.Count = basketProduct.ProductCount;
+                    salesProduct.SaleId = sale.Id;
+                    salesProduct.Price = dbProduct.Price;
+                    salesProducts.Add(salesProduct);
+                    total += basketProduct.ProductCount * dbProduct.Price;
+
+                    dbProduct.Count = dbProduct.Count - basketProduct.ProductCount;
+                }
+                sale.SalesProducts = salesProducts;
+                sale.Total = total;
+                
+                await _context.AddAsync(sale);
+                await _context.SaveChangesAsync();
+                TempData["success"] = "Satış uğurla başa çatdı..";
+                return RedirectToAction("ShowItem");
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
         }
     }
 }

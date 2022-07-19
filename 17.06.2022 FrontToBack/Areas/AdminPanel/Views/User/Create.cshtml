@@ -4,7 +4,6 @@
     Layout = "~/Areas/AdminPanel/Views/_AdminLayout.cshtml";
 }
 <section class="content-header">
-
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-4">
@@ -56,7 +55,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
+          <div class="col-6">
             <div class="icheck-primary">
               <input type="checkbox" id="agreeTerms" name="terms" value="agree">
               <label for="agreeTerms">
@@ -65,10 +64,14 @@
             </div>
           </div>
           <!-- /.col -->
+         
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
-            <button asp-action="index" class="btn btn-default btn-block">Cansel</button>
           </div>
+           <div class="col-2">
+          <a asp-controller="user" asp-action="index" class="btn btn-default">Cansel</a>
+          </div>
+
           <!-- /.col -->
         </div>
       </form>
