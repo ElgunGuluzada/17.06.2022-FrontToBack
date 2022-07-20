@@ -1,4 +1,12 @@
-﻿@model List<Product>
+﻿@using _17._06._2022_FrontToBack.Services
+@model List<Product>
+
+
+@inject ISum sum;
+@{
+    int result = sum.Sum(4, 5);
+};
+
 
 @foreach (var item in Model)
 {

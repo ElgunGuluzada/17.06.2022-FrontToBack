@@ -130,7 +130,6 @@ namespace _17._06._2022_FrontToBack.Controllers
             BasketVM existProduct = products.Find(p => p.Id == id);
             if (product.Count <= existProduct.ProductCount)
             {
-                //ViewBag.Name(product.Count);
                 TempData["failCount"] = $"{product.Name}-dan bazada cemisi {product.Count} eded var";
             }
             else

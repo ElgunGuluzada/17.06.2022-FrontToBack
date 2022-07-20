@@ -1,5 +1,6 @@
 using _17._06._2022_FrontToBack.DAL;
 using _17._06._2022_FrontToBack.Models;
+using _17._06._2022_FrontToBack.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,13 @@ namespace _17._06._2022_FrontToBack
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            //scope
+            //transient
+            //singlton
+
+            services.AddScoped<ISum, SumService>();
+
             services.AddDbContext<AppDbContext>(option =>
             {
                 option.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
