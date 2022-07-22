@@ -124,9 +124,17 @@
                                 </li>
                                  <li class="nav-item my-auto shop-cart">
                                    <a asp-controller="basket" asp-action="showitem"> <i class="fas fa-shopping-bag"></i></a>
-                                    <sup id="totalCount" class="rounded-circle">@ViewBag.BasketCount</sup>
+                                  @if (User.Identity.IsAuthenticated)
+                                 {
+                                       <sup id="totalCount" class="rounded-circle">@ViewBag.BasketCount</sup>
                                     <span id="totalPrice">CART ($@ViewBag.TotalPrice)</span>
-                                    <ul class="list-unstyled py-3">
+                                }
+                                else
+                                {
+                                      <sup id="totalCount" class="rounded-circle">0</sup>
+                                    <span id="totalPrice">CART ($0)</span>
+                                }
+                                <ul class="list-unstyled py-3">
                                         <li class="">No products in the cart.</li>
                                     </ul>
                                 </li>

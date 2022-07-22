@@ -207,6 +207,9 @@ addBtn.forEach(add =>
     add.addEventListener("click", function () {
         let dataId = this.getAttribute("data-id")
         console.log(dataId)
+        if () {
+
+        }
         axios.post("/basket/AddItem?id="+dataId)
             .then(function (response) {
                 // handle success

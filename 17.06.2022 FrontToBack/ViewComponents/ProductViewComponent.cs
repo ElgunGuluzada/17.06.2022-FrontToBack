@@ -17,9 +17,9 @@ namespace _17._06._2022_FrontToBack.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int take)
+        public async Task<IViewComponentResult> InvokeAsync(int skip)
         {
-            List<Product> products = _context.Products.Include(p => p.Category).Take(take).ToList();
+            List<Product> products = _context.Products.Include(p => p.Category).Skip(skip).ToList();
             return View(await Task.FromResult(products));
         }
     }

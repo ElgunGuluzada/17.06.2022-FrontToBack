@@ -27,18 +27,17 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
         {
             var users = _userManager.Users.ToList();
             UserVM userVM = new UserVM();
+
             foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
                 //var roles = _rolemanager.Roles.ToList();
-
                 userVM.Users = users;
                 userVM.userRoles = userRoles;
                 //userVM.Roles = roles;
                 userVM.UserId = user.Id;
             }
             //var user = await _userManager.GetUserAsync(HttpContext.User);
-          
             return View(userVM);
         }
 
@@ -105,7 +104,6 @@ namespace _17._06._2022_FrontToBack.Areas.AdminPanel.Controllers
                 }
                 return View(registerVM);
             }
-
             await _userManager.AddToRoleAsync(user, UserRoles.Member.ToString());
             return RedirectToAction("index","user");
         }

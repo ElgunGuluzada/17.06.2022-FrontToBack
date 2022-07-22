@@ -4,10 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     int count = 0;
 
-
-    
-
-
     //var list = new List<Product>
     //{
     // new Product{Name="lorem"},
@@ -40,7 +36,7 @@
     </div>
       
     <div class ="row">
-        @if (Model.Count() > 0)
+        @if (Model.Count() > 0 && User.Identity.IsAuthenticated)
         {
              <table class="table">
               <thead>
@@ -72,14 +68,18 @@
               </tbody>
             </table>
         }
-        else
+        else if(Model.Count() <= 0)
         {
             <a asp-controller="home" asp-action="index"><h1 style="display:block;color:black">No Product <br />Return Home Page</h1></a>
+        }
+        else
+        {
+            <h3>Please First Go To <a asp-controller="account" asp-action="login"> <b>Login</b> </a>  Page</h3>
         }
     </div>
 
         <div class="row">
-         @if (Model.Count>0)
+         @if (Model.Count>0 && User.Identity.IsAuthenticated)
           {
             <span><b>
                 Total :
@@ -91,8 +91,6 @@
             <button style="margin-left: 200px" type="submit" class="btn btn-success">Sale</button>
         </form>
         }
-           
-       
     </div>
 </div>
 

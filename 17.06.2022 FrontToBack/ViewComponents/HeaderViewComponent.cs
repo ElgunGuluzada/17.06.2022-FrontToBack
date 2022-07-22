@@ -33,13 +33,18 @@ namespace _17._06._2022_FrontToBack.ViewComponents
             {
                 return View();
             }
-
+            
             ViewBag.BasketCount = 0;
             ViewBag.TotalPrice = 0;
             double totalPrice = 0;
             double total = 0;
             int totalCount = 0;
-            string basket = Request.Cookies["basket"];
+            string userName = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                userName = User.Identity.Name;
+            }
+            string basket = Request.Cookies[$"{userName}basket"];
             if (basket != null)
             {
                 List<BasketVM> products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
